@@ -2,27 +2,30 @@ import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, RotateCcw, AlertCircle, FileText, Copy } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+
 import { Block, SearchMode } from "@/types";
 import { parseConversation } from "@/lib/parser";
 import { categorizeExchanges } from "@/lib/categorizer";
 import { searchBlocks, highlightText } from "@/lib/search";
 import { saveState, loadState, clearState } from "@/lib/storage";
 import { SAMPLE_CONVERSATION } from "@/lib/sampleData";
+
 import { ThemeToggle } from "@/components/theme-toggle";
-import { toast } from "sonner";
 import SearchBar from "@/components/app/SearchBar";
 import BlockCard from "@/components/app/BlockCard";
 import SkeletonCards from "@/components/app/SkeletonCards";
-import { chatRequest } from "@/lib/api";
 
 export default function AppPage() {
   const [searchParams] = useSearchParams();
+
   const [inputText, setInputText] = useState("");
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchMode, setSearchMode] = useState<SearchMode>("filter");
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [hasOrganized, setHasOrganized] = useState(false);
@@ -30,17 +33,17 @@ export default function AppPage() {
   // Load persisted state
   useEffect(() => {
     const saved = loadState();
-    if (saved) {
-      setInputText(saved.inputText);
-      setBlocks(saved.blocks);
-      setSearchQuery(saved.searchQuery);
-      setSearchMode(saved.searchMode);
-      if (saved.blocks.length > 0) setHasOrganized(true);
-    }
+    if (!saved) return;
+
+    setInputText(saved.inputText ?? "");
+    setBlocks(saved.blocks ?? []);
+    setSearchQuery(saved.searchQuery ?? "");
+    setSearchMode(saved.searchMode ?? "filter");
+    if ((saved.blocks ?? []).length > 0) setHasOrganized(true);
   }, []);
 
-  const handleIngest = useCallback(
-    async (text?: string) => {
+  const organize = useCallback(
+    (text?: string) => {
       const source = text ?? inputText;
 
       if (!source.trim()) {
@@ -51,16 +54,6 @@ export default function AppPage() {
       setError("");
       setIsLoading(true);
 
-      try {
-        // ✅ Backend fetch (optional for your app; keeps key safe on server)
-        // If your backend returns something useful, you can use it later.
-        await chatRequest(source);
-      } catch (e) {
-        // Don’t block the organizer if AI fails—just notify
-        toast.error("AI request failed. Organizing locally instead.");
-      }
-
-      // ✅ Your existing local organize logic (unchanged)
       setTimeout(() => {
         const exchanges = parseConversation(source);
 
@@ -76,16 +69,16 @@ export default function AppPage() {
         setBlocks(organized);
         setHasOrganized(true);
         setIsLoading(false);
-      }, 500);
+      }, 400);
     },
     [inputText]
   );
 
-  // Demo mode
+  // Demo mode (?demo=true)
   useEffect(() => {
     if (searchParams.get("demo") === "true") {
       setInputText(SAMPLE_CONVERSATION);
-      handleIngest(SAMPLE_CONVERSATION);
+      organize(SAMPLE_CONVERSATION);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -101,6 +94,7 @@ export default function AppPage() {
     setInputText("");
     setBlocks([]);
     setSearchQuery("");
+    setSearchMode("filter");
     setError("");
     setHasOrganized(false);
     clearState();
@@ -108,12 +102,11 @@ export default function AppPage() {
 
   const handleLoadSample = () => {
     setInputText(SAMPLE_CONVERSATION);
-    handleIngest(SAMPLE_CONVERSATION);
+    organize(SAMPLE_CONVERSATION);
   };
 
   const handleCopySample = async () => {
     await navigator.clipboard.writeText(SAMPLE_CONVERSATION);
-    toast.success("Sample copied to clipboard!");
   };
 
   const { filteredBlocks, matchCount, totalBlocks } = searchBlocks(
@@ -141,7 +134,8 @@ export default function AppPage() {
             <span className="text-foreground">Chat Organizer</span>
           </h1>
           <p className="text-muted-foreground">
-            Paste a conversation, organize it into semantic blocks, and search through them.
+            Paste a conversation, organize it into semantic blocks, and search
+            through them.
           </p>
         </motion.div>
 
@@ -178,7 +172,7 @@ export default function AppPage() {
 
           <div className="flex flex-wrap gap-3">
             <Button
-              onClick={() => handleIngest()}
+              onClick={() => organize()}
               disabled={isLoading}
               className="gap-2 font-semibold"
               size="lg"
