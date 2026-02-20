@@ -206,14 +206,14 @@ export default function Landing() {
       {/* Footer */}
       <footer className="border-t border-border py-10">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p className="mb-2 font-semibold text-foreground">TectorAI Chat Organizer</p>
+          <p className="mb-2 font-semibold text-foreground">Sruthi Kommati • Chat Organizer Assignment</p>
           <p>Built with React · TypeScript · Tailwind CSS · shadcn/ui · Framer Motion</p>
           <div className="mt-4 flex justify-center gap-6">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">
+            <a href="https://github.com/sruthi141  " target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">
               GitHub
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              Deployment
+            <a href="https://linkedin.com/in/sruthikommati" className="hover:text-primary transition-colors">
+            Linkedin
             </a>
           </div>
         </div>
