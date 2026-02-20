@@ -1,158 +1,92 @@
-# 🚀 TectorAI Chat Organizer
+# 🚀 Chat Organizer Assignment
 
-Transform messy conversations into structured, searchable knowledge blocks using semantic organization.
-
-🔗 Live Demo: [Add Your Deployed Link Here]  
-📦 GitHub Repo: [Add Your Repo Link Here]
+A semantic chat organization tool that converts raw conversations into structured, searchable knowledge blocks.
 
 ---
 
-## 📌 Overview
-
-TectorAI Chat Organizer is a web application that ingests raw chat conversations and intelligently organizes them into semantic blocks. Users can then search and filter through structured knowledge for quick retrieval.
-
-This project was built as part of the TectorAI Take-Home Assignment.
-
----
-
-## ✨ Features
-
-### ✅ Chat Ingestion
-- Paste raw conversation text (User / Assistant format)
-- Click **"Ingest & Organize"** to process content
-
-### ✅ Semantic Organization
-- Automatically groups exchanges into thematic blocks
-- Keyword-based scoring system
-- Intelligent theme assignment
-- Fallback categorization for unmatched content
-
-### ✅ Search Functionality
-- Real-time block filtering
-- Highlighted keyword matches
-- Toggle between filter mode and highlight mode
-
-### ✅ Persistence
-- Stores organized data in localStorage
-- Automatically restores previous session
-
-### ✅ UI & UX
-- Responsive layout
-- Smooth animations using Framer Motion
-- Clean component structure
-- Modern gradient-based theme cards
-
----
-
-## 🏗️ Tech Stack
-
-| Technology | Purpose |
-|------------|----------|
-| React + Vite | Frontend framework |
-| TypeScript | Type safety |
-| Tailwind CSS | Styling |
-| Framer Motion | Animations |
-| Lucide Icons | UI Icons |
-| LocalStorage | Client-side persistence |
-
----
-
-## 🧠 Architecture Overview
-
-### 1️⃣ Parsing Layer
-- Splits raw conversation into structured exchanges
-- Converts text into `{ user, assistant }` objects
-
-### 2️⃣ Semantic Scoring Engine
-- Scores exchanges against predefined themes
-- Assigns best-matching theme
-- Groups exchanges into blocks
-
-### 3️⃣ Search Engine
-- Filters blocks by query
-- Highlights matched text
-- Supports dynamic toggling
-
----
-
-## 📂 Project Structure
-
-
-src/
-├── components/
-│ ├── ChatInput.tsx
-│ ├── SearchBar.tsx
-│ ├── BlocksGrid.tsx
-│
-├── lib/
-│ ├── parseConversation.ts
-│ ├── organizeBlocks.ts
-│ ├── highlight.ts
-│
-├── types.ts
-├── main.tsx
-└── App.tsx
-
-
----
-
-## ⚙️ Installation & Setup
+## ⚙️ Setup
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/tectorai-chat-organizer.git
-
-# Navigate into the project
-cd tectorai-chat-organizer
-
-# Install dependencies
+git clone https://github.com/your-username/chat-organizer.git
+cd chat-organizer
 npm install
-
-# Start development server
 npm run dev
 
-App runs on:
-
+Open:
 http://localhost:8080
-🚀 Deployment
 
-This project can be deployed easily on:
+🧠 Approach
+1️⃣ Parsing
 
-Vercel
+Input conversation in User: / Assistant: format
 
-Netlify
+Converted into structured { user, assistant } exchange objects
 
-Render
+2️⃣ Semantic Grouping
 
-Build command:
+Predefined themes with keyword lists
 
-npm run build
-🎯 Key Evaluation Criteria Covered
+Exchanges scored against themes
 
-Clean architecture
+Highest-scoring theme assigned
 
-Modular component design
+Grouped into logical blocks
 
-Semantic grouping logic
+Fallback category for unmatched content
 
-Search optimization
+3️⃣ Search
 
-UI polish & animation
+Filter Mode: Shows matching blocks only
 
-State persistence
+Highlight Mode: Highlights matched keywords
 
-Error handling
+Real-time updates
 
-📸 Screenshots
+4️⃣ Persistence
 
-(Add screenshots here after deployment)
+Uses localStorage
+
+Restores previous session automatically
+
+🛠️ Tech Stack
+
+React + Vite
+
+TypeScript
+
+Tailwind CSS
+
+Framer Motion
+
+Lucide Icons
+
+⏱️ Time Spent
+
+~4 hours total
+
+Parsing & grouping logic
+
+Search functionality
+
+UI & animations
+
+Testing & refinements
+
+🚀 Future Improvements
+
+Embedding-based semantic similarity
+
+Export blocks (JSON/Markdown)
+
+NLP-based theme detection
+
+Unit testing
 
 👩‍💻 Author
 
 Sruthi Kommati
 B.Tech CSE (2026)
-Indian Institute of Information Technology Sri City
-
+IIIT Sri City
 GitHub: https://github.com/sruthi141
 
 LinkedIn: https://linkedin.com/in/sruthikommati
